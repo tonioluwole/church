@@ -1,14 +1,11 @@
 import requests
 import json
 import os
-from pathlib import Path
 from datetime import date
 from time import sleep
 import tkinter
 from tkinter import font
-from tkinter import messagebox
 from tkinter import *
-
 
 #Auth codes and constants
 clientid='5ef5d12e37f08560522e850519259a5c03430635b3ac60b2477d0476a0cb52cc'
@@ -44,20 +41,22 @@ json_data = x.json()
 json_object=json.loads(json.dumps(json_data))
 
 #loop through and get the "display value" value from json data then write it to file. Should be the form submission
-filepath = "C:\\Users\\"+username+"\\Desktop\\"+today+"'s Prayer requests.txt"
+filepath = "C:\\Users\\"+username+"\\Desktop\\"+today+"'s Prayer requests.txt" #Writes to desktop folder of PC running application
 with open(filepath, 'w+') as f: 
     for i in json_object["included"]:
         print ("--------\n",i["attributes"]['display_value'])
         f.write(str("---------\n" + i["attributes"]['display_value']) + "\n\n" )
 
 requestsfile=open(filepath)
-gottenrequests = requestsfile.read()
+gottenrequests = requestsfile.read() #takes contents of textfile and creates string object
 
+#alternative to GUI window creation
 #os.startfile(filepath)
 
-
-
-#Function to display all fonts
+"""
+------------------------- START OF GUI / Tkinter ---------------------------
+"""
+#Function to display all tkinter fonts
 def allfonts():
     root = Tk()
     root.title('Font Families')
@@ -98,10 +97,6 @@ def allfonts():
     root.mainloop()
 #END of all fonts
 
-
-"""
--------------------------START OF GUI---------------------------
-"""
 class prayerrequests():
     def __init__(self):
 
@@ -116,21 +111,19 @@ class prayerrequests():
 
         Body_font = ("YU Gothic UI", 14,) 
         Label_font = ("YU Gothic UI", 18, 'bold') 
-        ##################
 
         scrollbar = Scrollbar(self.root)
-        scrollbar.pack( side = RIGHT, fill=Y )
+        scrollbar.pack( side = RIGHT, fill=Y)
+        ###################
 
-        label=Label(font=Label_font,text="Prayer Requests",background=grey, foreground=white,height=2, borderwidth=2, relief="groove")
-        label.pack(fill='both', expand=False)
-
+        Mainlabel=Label(font=Label_font,text="Prayer Requests",background=grey, foreground=white,height=2, borderwidth=2, relief="groove")
+        Mainlabel.pack(fill='both', expand=False)
 
         text = Text(self.root, yscrollcommand = scrollbar.set)
         text.insert(INSERT,gottenrequests)
         text.configure(font=Body_font,state=DISABLED, background=navy, foreground='White', borderwidth=0)
         text.pack(fill='both', expand=True,padx=(50,50))
         scrollbar.config( command = text.yview )
-
 
 app = prayerrequests()
 app.root.mainloop() #runs the app 
