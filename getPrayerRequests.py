@@ -6,6 +6,7 @@ from time import sleep
 import tkinter
 from tkinter import font
 from tkinter import *
+from apscheduler.scheduler import Scheduler
 
 #Auth codes and constants
 clientid='5ef5d12e37f08560522e850519259a5c03430635b3ac60b2477d0476a0cb52cc'
@@ -99,7 +100,7 @@ def allfonts():
 
 class prayerrequests():
     def __init__(self):
-
+        threading.Timer(5.0, prayerrequests).start()
         #Constants for GUI
         self.root = Tk()  # create a root widget
 
@@ -126,5 +127,14 @@ class prayerrequests():
         scrollbar.config( command = text.yview )
 
 app = prayerrequests()
-app.root.mainloop() #runs the app 
+
+def refresh(self):
+    self.destroy()
+    self.__init__()
+
+while True:
+    app.root.mainloop() #runs the app 
+    sleep(2)
+
+            
 
