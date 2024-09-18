@@ -46,7 +46,7 @@ def prayerrequests():
     json_object=json.loads(json.dumps(json_data))
 
     #loop through and get the "display value" value from json data then write it to file. Should be the form submission
-    filepath = "C:\\Users\\"+username+"\\Desktop\\"+today+"'s Prayer requests.txt" #Writes to desktop folder of PC running application
+    filepath = "C:\\Users\\"+username+"\\Documents\\"+today+"'s Prayer requests.txt" #Writes to desktop folder of PC running application
     with open(filepath, 'w+') as f: 
         for i in json_object["included"]:
             print ("--------\n",i["attributes"]['display_value'])
@@ -131,7 +131,7 @@ def prayerrequests():
     
     root.mainloop()
 
-    yes = messagebox.askyesno('','Refresh prayer requests?')
+    yes = messagebox.askyesno('Refresh','(This will refresh one more time regardless of your selection)\nRefresh prayer requests?')
     return yes
 
 prayerrequests()
