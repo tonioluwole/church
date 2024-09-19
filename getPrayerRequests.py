@@ -19,7 +19,7 @@ grey = "#28282f"
 white = '#ffffff'
 username = os.getlogin()
 
-#Get todays date to write to file name
+#Get todays date
 t= date.today()
 today=t.strftime('%m-%d-%Y')
 
@@ -90,7 +90,7 @@ def prayerrequests():
     json_object=json.loads(json.dumps(json_data))
 
     #loop through and get the "display value" value from json data then write it to file. Should be the form submission
-    filepath = "C:\\Users\\"+username+"\\Documents\\"+today+"'s Prayer requests.txt" #Writes to desktop folder of PC running application
+    filepath = "C:\\Users\\"+username+"\\Documents\\"+today+"'s Prayer requests from planning centre.txt" #Writes to desktop folder of PC running application
     with open(filepath, 'w+') as f: 
         for i,s in zip(json_object["included"],json_object["data"]):
 
