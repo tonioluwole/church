@@ -116,8 +116,8 @@ def prayerrequests():
     root.maxsize(1200, 800)
     root.geometry("600x600+660+240")  # width x height + x + y
 
-    Body_font = ("Microsoft YaHei", 14,) 
-    Label_font = ("Microsoft YaHei UI", 18, 'bold') 
+    Body_font = ("Malgun Gothic", 14,) 
+    Label_font = ("Malgun Gothic", 18, 'bold') 
 
     scrollbar = Scrollbar(root)
     scrollbar.pack( side = RIGHT, fill=Y)
