@@ -25,6 +25,47 @@ username = os.getlogin()
 t= date.today()
 today=t.strftime('%m-%d-%Y')
 
+#Function to display all tkinter fonts
+def allfonts():
+    root = Tk()
+    root.title('Font Families')
+    fonts=list(font.families())
+    fonts.sort()
+
+    def populate(frame):
+        '''Put in the fonts'''
+        listnumber = 1
+        for i, item in enumerate(fonts):
+            label = "listlabel" + str(listnumber)
+            label = Label(frame,text=item,font=(item, 16))
+            label.grid(row=i)
+            label.bind("<Button-1>",lambda e,item=item:copy_to_clipboard(item))
+            listnumber += 1
+
+    def copy_to_clipboard(item):
+        root.clipboard_clear()
+        root.clipboard_append("font=('" + item.lstrip('@') + "', 12)")
+
+    def onFrameConfigure(canvas):
+        '''Reset the scroll region to encompass the inner frame'''
+        canvas.configure(scrollregion=canvas.bbox("all"))
+
+    canvas = Canvas(root, borderwidth=0, background="#ffffff")
+    frame = Frame(canvas, background="#ffffff")
+    vsb = Scrollbar(root, orient="vertical", command=canvas.yview)
+    canvas.configure(yscrollcommand=vsb.set)
+
+    vsb.pack(side="right", fill="y")
+    canvas.pack(side="left", fill="both", expand=True)
+    canvas.create_window((4,4), window=frame, anchor="nw")
+
+    frame.bind("<Configure>", lambda event, canvas=canvas: onFrameConfigure(canvas))
+
+    populate(frame)
+
+    root.mainloop()
+    #END of all fonts
+
 def prayerrequests():
     #Google Sheets ID and API key
     SHEET_ID = '1pKHV9YA1_Zb1HkCmfzHpKVctOrbF3qRqw8YiwFGmye4'
@@ -63,47 +104,7 @@ def prayerrequests():
     """
     ------------------------- START OF GUI / Tkinter ---------------------------
     """
-    #Function to display all tkinter fonts
-    def allfonts():
-        root = Tk()
-        root.title('Font Families')
-        fonts=list(font.families())
-        fonts.sort()
 
-        def populate(frame):
-            '''Put in the fonts'''
-            listnumber = 1
-            for i, item in enumerate(fonts):
-                label = "listlabel" + str(listnumber)
-                label = Label(frame,text=item,font=(item, 16))
-                label.grid(row=i)
-                label.bind("<Button-1>",lambda e,item=item:copy_to_clipboard(item))
-                listnumber += 1
-
-        def copy_to_clipboard(item):
-            root.clipboard_clear()
-            root.clipboard_append("font=('" + item.lstrip('@') + "', 12)")
-
-        def onFrameConfigure(canvas):
-            '''Reset the scroll region to encompass the inner frame'''
-            canvas.configure(scrollregion=canvas.bbox("all"))
-
-        canvas = Canvas(root, borderwidth=0, background="#ffffff")
-        frame = Frame(canvas, background="#ffffff")
-        vsb = Scrollbar(root, orient="vertical", command=canvas.yview)
-        canvas.configure(yscrollcommand=vsb.set)
-
-        vsb.pack(side="right", fill="y")
-        canvas.pack(side="left", fill="both", expand=True)
-        canvas.create_window((4,4), window=frame, anchor="nw")
-
-        frame.bind("<Configure>", lambda event, canvas=canvas: onFrameConfigure(canvas))
-
-        populate(frame)
-
-        root.mainloop()
-    #END of all fonts
-    
     #Constants for GUI
     root = Tk()  # create a root widget
 
@@ -113,8 +114,8 @@ def prayerrequests():
     root.maxsize(1200, 800)
     root.geometry("600x600+660+240")  # width x height + x + y
 
-    Body_font = ("YU Gothic UI", 14,) 
-    Label_font = ("YU Gothic UI", 18, 'bold') 
+    Body_font = ("Microsoft YaHei", 14,) 
+    Label_font = ("Microsoft YaHei UI", 18, 'bold') 
 
     scrollbar = Scrollbar(root)
     scrollbar.pack( side = RIGHT, fill=Y)
