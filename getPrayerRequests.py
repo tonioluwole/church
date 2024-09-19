@@ -16,9 +16,11 @@ from google.oauth2.service_account import Credentials
 #Auth codes and constants
 clientid='5ef5d12e37f08560522e850519259a5c03430635b3ac60b2477d0476a0cb52cc'
 secret="a4eafc69b2b5517f3016adb2a899eda397b7cdb2997b8c6db2a18b6bfb22840c"
-navy = "#111827"
-grey = "#28282f"
+navy = "#174EA6"
+grey = "#9AA0A6"
+yellow = "#FBBC04"
 white = '#ffffff'
+black = "black"
 username = os.getlogin()
 
 #Get todays date to write to file name
@@ -121,7 +123,7 @@ def prayerrequests():
     scrollbar.pack( side = RIGHT, fill=Y)
     ###################
 
-    Mainlabel=Label(font=Label_font,text="Prayer Requests",background=grey, foreground=white,height=2, borderwidth=2, relief="groove")
+    Mainlabel=Label(font=Label_font,text="Prayer Requests",background=yellow, foreground=black,height=2, borderwidth=2, relief="groove")
     Mainlabel.pack(fill='both', expand=False)
 
     text = Text(root, yscrollcommand = scrollbar.set)
