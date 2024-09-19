@@ -9,7 +9,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter.simpledialog import askstring
 from tkinter.messagebox import showinfo
-
+import re
 
 #Auth codes and constants
 clientid='5ef5d12e37f08560522e850519259a5c03430635b3ac60b2477d0476a0cb52cc'
@@ -42,15 +42,23 @@ def prayerrequests():
     #Convert request to JSON data called json_data
     json_data = x.json()
 
+    with open('data.json', 'w', encoding='utf-8') as f:
+        json.dump(json_data, f, ensure_ascii=False, indent=4)
+
     #Converts data to python object
     json_object=json.loads(json.dumps(json_data))
 
     #loop through and get the "display value" value from json data then write it to file. Should be the form submission
     filepath = "C:\\Users\\"+username+"\\Documents\\"+today+"'s Prayer requests.txt" #Writes to desktop folder of PC running application
     with open(filepath, 'w+') as f: 
-        for i in json_object["included"]:
-            print ("--------\n",i["attributes"]['display_value'])
-            f.write(str("---------\n" + i["attributes"]['display_value']) + "\n\n" )
+        for i,s in zip(json_object["included"],json_object["data"]):
+
+            trunc=(' ').join(re.findall('.{1,10}',s["attributes"]['created_at']))[0:17].replace("T","| ")
+            #above does the following to the date value from the json file:
+            #adds a space after 10 characters
+            #replaces the letter T with | 
+            print ("------\nSUBMITTED AT: " + trunc + "\n\n" + i["attributes"]['display_value'])
+            print ("------\nSUBMITTED AT: " + trunc + "\n\n" + i["attributes"]['display_value'], file=f)
 
     requestsfile=open(filepath)
 
@@ -131,14 +139,17 @@ def prayerrequests():
     
     root.mainloop()
 
-    yes = messagebox.askyesno('Refresh','(This will refresh one more time regardless of your selection)\nRefresh prayer requests?')
-    return yes
-
-prayerrequests()
-
-#Loop to refresh app and get new requests, plan is to make it a button within the app
-if prayerrequests() == True:
+    
+def container():
     prayerrequests()
-else:
-    quit()
+    yes = messagebox.askyesno('','Refresh prayer requests?')
+ 
+    while True:
+        if yes == True:
+            container()
+        else:
+                quit()
+
+container()
+#Loop to refresh app and get new requests, plan is to make it a button within the app
 
