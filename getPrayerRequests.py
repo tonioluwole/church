@@ -38,6 +38,7 @@ def prayerrequests():
 
     # Make the GET request to the Google Sheets API
     response = requests.get(url)
+    filepath = "C:\\Users\\"+username+"\\Desktop\\"+today+"'s Prayer requests.txt"
 
     # Check if the request was successful
     if response.status_code == 200:
@@ -46,11 +47,11 @@ def prayerrequests():
         rows = data.get('values', [])
         
         # Save the rows to a text file
-        with open('google_form_responses.txt', 'w') as file:
+        with open(filepath, 'w') as file:
             for row in rows:
                 file.write('-------\n'+'\n'.join(row)+'\n')
         
-        print("Responses saved to google_form_responses.txt")
+        print("Responses saved to "+filepath)
     else:
         print(f"Error: {response.status_code}, {response.text}")
 
@@ -99,7 +100,7 @@ def prayerrequests():
 
         root.mainloop()
     #END of all fonts
-    """
+    
     #Constants for GUI
     root = Tk()  # create a root widget
 
@@ -120,7 +121,7 @@ def prayerrequests():
     Mainlabel.pack(fill='both', expand=False)
 
     text = Text(root, yscrollcommand = scrollbar.set)
-    text.insert(INSERT,gottenrequests)
+    text.insert(INSERT,rows)
     text.configure(font=Body_font,state=DISABLED, background=navy, foreground='White', borderwidth=0)
     text.pack(fill='both', expand=True,padx=(50,50))
     scrollbar.config( command = text.yview)
@@ -129,13 +130,14 @@ def prayerrequests():
 
     yes = messagebox.askyesno('','Refresh prayer requests?')
     return yes
-    """
+
 prayerrequests()
 
 #Loop to refresh app and get new requests, plan is to make it a button within the app
+'''
 if prayerrequests() == True:
-    prayerrequests()
+    continue
 else:
     quit()
-
+'''
 
