@@ -79,7 +79,7 @@ def prayerrequests():
 
     # Make the GET request to the Google Sheets API
     response = requests.get(url)
-    filepath = "C:\\Users\\"+username+"\\Desktop\\"+today+"'s Prayer requests.txt"
+    filepath = "C:\\Users\\"+username+"\\Desktop\\"+today+"'s Prayer requests from Google Forms.txt"
 
     # Check if the request was successful
     if response.status_code == 200:
@@ -132,7 +132,7 @@ def prayerrequests():
     
     root.mainloop()
 
-    
+#Loop to refresh app and get new requests, plan is to make it a button within the app
 def container():
     prayerrequests()
     yes = messagebox.askyesno('','Refresh prayer requests?')
@@ -143,5 +143,19 @@ def container():
         else:
                 quit()
 
-container()
-#Loop to refresh app and get new requests, plan is to make it a button within the app
+#for me
+def ask () :
+    jack = input("\n1 for fonts \n2 for app\n3 to quit\n\n")
+    if jack == "1":
+        allfonts()
+        ask()
+    elif jack == "2":
+        container()
+        ask()
+    elif jack =="3":
+        quit()
+    else:
+        print("Wrong answer\n")
+        ask()
+
+ask()
