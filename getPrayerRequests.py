@@ -14,9 +14,11 @@ import re
 #Auth codes and constants
 clientid='5ef5d12e37f08560522e850519259a5c03430635b3ac60b2477d0476a0cb52cc'
 secret="a4eafc69b2b5517f3016adb2a899eda397b7cdb2997b8c6db2a18b6bfb22840c"
-navy = "#111827"
-grey = "#28282f"
-white = '#ffffff'
+navy = "#15284a"
+grey = "#202124"
+yellow = "#FBBC04"
+white = "white"
+black = "black"
 username = os.getlogin()
 
 #Get todays date
