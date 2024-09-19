@@ -9,6 +9,8 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter.simpledialog import askstring
 from tkinter.messagebox import showinfo
+import gspread
+from google.oauth2.service_account import Credentials
 
 
 #Auth codes and constants
@@ -24,40 +26,34 @@ t= date.today()
 today=t.strftime('%m-%d-%Y')
 
 def prayerrequests():
-    #API Call to get json data
-    x = requests.get('https://api.planningcenteronline.com/people/v2/forms/818055/form_submissions?include=form_submission_values', 
-    auth=(clientid,secret))
+   # Your Google Sheets ID and API key
+    SHEET_ID = '1pKHV9YA1_Zb1HkCmfzHpKVctOrbF3qRqw8YiwFGmye4'
+    API_KEY = 'AIzaSyCfHCY7oC3ymy4Sh8jBWZ5I2_332U_si2o'
 
-    # print("x= ",x.status_code)
-    # 200 Success.
-    # 301 Moved Permanently: site moved, redirect.
-    # 302 Found: Temporary redirect.
-    # 400 Bad Request: Client error.
-    # 401 Unauthorized: Authentication needed.
-    # 403 Forbidden: Access denied.
-    # 404 Not Found: Resource missing.
-    # 500 Internal Server Error: Server issue.
-    # 503 Service Unavailable: Server overloaded or down.. 
+    # The range you want to access (e.g., 'Form responses 1!A1:Z')
+    RANGE = 'Form responses!A2:C'
 
-    #Convert request to JSON data called json_data
-    json_data = x.json()
+    # Construct the API URL
+    url = f'https://sheets.googleapis.com/v4/spreadsheets/{SHEET_ID}/values/{RANGE}?key={API_KEY}'
 
-    #Converts data to python object
-    json_object=json.loads(json.dumps(json_data))
+    # Make the GET request to the Google Sheets API
+    response = requests.get(url)
 
-    #loop through and get the "display value" value from json data then write it to file. Should be the form submission
-    filepath = "C:\\Users\\"+username+"\\Desktop\\"+today+"'s Prayer requests.txt" #Writes to desktop folder of PC running application
-    with open(filepath, 'w+') as f: 
-        for i in json_object["included"]:
-            print ("--------\n",i["attributes"]['display_value'])
-            f.write(str("---------\n" + i["attributes"]['display_value']) + "\n\n" )
+    # Check if the request was successful
+    if response.status_code == 200:
+        data = response.json()
+        # Get the rows from the response
+        rows = data.get('values', [])
+        
+        # Save the rows to a text file
+        with open('google_form_responses.txt', 'w') as file:
+            for row in rows:
+                file.write('-------\n'+'\n'.join(row)+'\n')
+        
+        print("Responses saved to google_form_responses.txt")
+    else:
+        print(f"Error: {response.status_code}, {response.text}")
 
-    requestsfile=open(filepath)
-
-    gottenrequests = requestsfile.read()
-    #takes contents of textfile and creates string object
-
-    #alternative to GUI window creation
     #os.startfile(filepath)
 
     """
@@ -103,7 +99,7 @@ def prayerrequests():
 
         root.mainloop()
     #END of all fonts
-
+    """
     #Constants for GUI
     root = Tk()  # create a root widget
 
@@ -133,7 +129,7 @@ def prayerrequests():
 
     yes = messagebox.askyesno('','Refresh prayer requests?')
     return yes
-
+    """
 prayerrequests()
 
 #Loop to refresh app and get new requests, plan is to make it a button within the app
@@ -141,4 +137,5 @@ if prayerrequests() == True:
     prayerrequests()
 else:
     quit()
+
 
