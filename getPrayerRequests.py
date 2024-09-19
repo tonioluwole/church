@@ -23,6 +23,47 @@ username = os.getlogin()
 t= date.today()
 today=t.strftime('%m-%d-%Y')
 
+#Function to display all tkinter fonts
+def allfonts():
+    root = Tk()
+    root.title('Font Families')
+    fonts=list(font.families())
+    fonts.sort()
+
+    def populate(frame):
+        '''Put in the fonts'''
+        listnumber = 1
+        for i, item in enumerate(fonts):
+            label = "listlabel" + str(listnumber)
+            label = Label(frame,text=item,font=(item, 16))
+            label.grid(row=i)
+            label.bind("<Button-1>",lambda e,item=item:copy_to_clipboard(item))
+            listnumber += 1
+
+    def copy_to_clipboard(item):
+        root.clipboard_clear()
+        root.clipboard_append("font=('" + item.lstrip('@') + "', 12)")
+
+    def onFrameConfigure(canvas):
+        '''Reset the scroll region to encompass the inner frame'''
+        canvas.configure(scrollregion=canvas.bbox("all"))
+
+    canvas = Canvas(root, borderwidth=0, background="#ffffff")
+    frame = Frame(canvas, background="#ffffff")
+    vsb = Scrollbar(root, orient="vertical", command=canvas.yview)
+    canvas.configure(yscrollcommand=vsb.set)
+
+    vsb.pack(side="right", fill="y")
+    canvas.pack(side="left", fill="both", expand=True)
+    canvas.create_window((4,4), window=frame, anchor="nw")
+
+    frame.bind("<Configure>", lambda event, canvas=canvas: onFrameConfigure(canvas))
+
+    populate(frame)
+
+    root.mainloop()
+    #END of all fonts
+
 def prayerrequests():
     #API Call to get json data
     x = requests.get('https://api.planningcenteronline.com/people/v2/forms/818055/form_submissions?include=form_submission_values', 
@@ -71,46 +112,6 @@ def prayerrequests():
     """
     ------------------------- START OF GUI / Tkinter ---------------------------
     """
-    #Function to display all tkinter fonts
-    def allfonts():
-        root = Tk()
-        root.title('Font Families')
-        fonts=list(font.families())
-        fonts.sort()
-
-        def populate(frame):
-            '''Put in the fonts'''
-            listnumber = 1
-            for i, item in enumerate(fonts):
-                label = "listlabel" + str(listnumber)
-                label = Label(frame,text=item,font=(item, 16))
-                label.grid(row=i)
-                label.bind("<Button-1>",lambda e,item=item:copy_to_clipboard(item))
-                listnumber += 1
-
-        def copy_to_clipboard(item):
-            root.clipboard_clear()
-            root.clipboard_append("font=('" + item.lstrip('@') + "', 12)")
-
-        def onFrameConfigure(canvas):
-            '''Reset the scroll region to encompass the inner frame'''
-            canvas.configure(scrollregion=canvas.bbox("all"))
-
-        canvas = Canvas(root, borderwidth=0, background="#ffffff")
-        frame = Frame(canvas, background="#ffffff")
-        vsb = Scrollbar(root, orient="vertical", command=canvas.yview)
-        canvas.configure(yscrollcommand=vsb.set)
-
-        vsb.pack(side="right", fill="y")
-        canvas.pack(side="left", fill="both", expand=True)
-        canvas.create_window((4,4), window=frame, anchor="nw")
-
-        frame.bind("<Configure>", lambda event, canvas=canvas: onFrameConfigure(canvas))
-
-        populate(frame)
-
-        root.mainloop()
-    #END of all fonts
 
     #Constants for GUI
     root = Tk()  # create a root widget
@@ -121,8 +122,9 @@ def prayerrequests():
     root.maxsize(1200, 800)
     root.geometry("600x600+660+240")  # width x height + x + y
 
-    Body_font = ("YU Gothic UI", 14,) 
-    Label_font = ("YU Gothic UI", 18, 'bold') 
+    Label_font = ("Malgun Gothic", 18, 'bold') 
+    Body_font = ("Malgun Gothic", 14,) 
+    
 
     scrollbar = Scrollbar(root)
     scrollbar.pack( side = RIGHT, fill=Y)
@@ -139,7 +141,7 @@ def prayerrequests():
     
     root.mainloop()
 
-    
+#Loop to refresh app and get new requests, plan is to make it a button within the app
 def container():
     prayerrequests()
     yes = messagebox.askyesno('','Refresh prayer requests?')
@@ -150,6 +152,21 @@ def container():
         else:
                 quit()
 
-container()
-#Loop to refresh app and get new requests, plan is to make it a button within the app
+#for me
+def ask () :
+    jack = input("\n1 for fonts \n2 for app\n3 to quit\n\n")
+    if jack == "1":
+        allfonts()
+        ask()
+    elif jack == "2":
+        container()
+        ask()
+    elif jack =="3":
+        quit()
+    else:
+        print("Wrong answer\n")
+        ask()
+
+ask()
+
 
