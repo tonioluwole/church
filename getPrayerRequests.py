@@ -145,6 +145,8 @@ def container():
         else:
                 quit()
 
+container()
+"""
 #for me
 def ask () :
     jack = input("\n1 for fonts \n2 for app\n3 to quit\n\n")
@@ -161,3 +163,4 @@ def ask () :
         ask()
 
 ask()
+"""
