@@ -81,7 +81,7 @@ def prayerrequests():
 
     # Make the GET request to the Google Sheets API
     response = requests.get(url)
-    filepath = "C:\\Users\\"+username+"\\Desktop\\"+today+"'s Prayer requests from Google Forms.txt"
+    filepath = "C:\\Users\\"+username+"\\Desktop\\Prayer Requests\\"+today+"'s requests from Google Forms.txt"
 
     # Check if the request was successful
     if response.status_code == 200:
@@ -90,7 +90,7 @@ def prayerrequests():
         rows = data.get('values', [])
         
         # Save the rows to a text file
-        with open(filepath, 'w') as file:
+        with open(filepath, 'w+') as file:
             for row in rows:
                 file.write('-------\nSUBMISSION ON: '+'\n'.join(row)+'\n')
         
