@@ -4,12 +4,15 @@ import os
 from datetime import date
 from time import sleep
 import tkinter
+import google.auth
 from tkinter import font
 from tkinter import *
 from tkinter import messagebox
 from tkinter.simpledialog import askstring
 from tkinter.messagebox import showinfo
 import gspread
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 from google.oauth2.service_account import Credentials
 
 
@@ -72,6 +75,19 @@ def prayerrequests():
     #Google Sheets ID and API key
     SHEET_ID = '1pKHV9YA1_Zb1HkCmfzHpKVctOrbF3qRqw8YiwFGmye4'
     API_KEY = 'AIzaSyCfHCY7oC3ymy4Sh8jBWZ5I2_332U_si2o'
+    
+    """
+    Scripts start 
+    creds, _ = google.auth.default()
+    service = build("script", "v1", credentials=creds)
+
+    scriptid='19g4v2Az23M2wZPdOSl5BQVBwZ2A8MO0wBiA-4u83hFjTbwRmdZrgImA-'
+     # Create an execution request object.
+    scriptrequest = {"function": "deleteOldEntries"}
+
+    #Run script request
+    service.scripts().run(scriptId=scriptid, body=scriptrequest).execute()
+    """
 
     # The range you want to access (e.g., 'Form responses 1!A1:Z')
     RANGE = 'Form responses!A2:C'
@@ -91,8 +107,9 @@ def prayerrequests():
         
         # Save the rows to a text file
         with open(filepath, 'w+') as file:
+            
             for row in rows:
-                file.write('-------\nSUBMISSION ON: '+'\n'.join(row)+'\n')
+                file.write('-------\nSUBMISSIONS ON: '+'\n'.join(row)+'\n')
         
         print("Responses saved to "+filepath)
     else:
