@@ -76,6 +76,7 @@ def prayerrequests():
     SHEET_ID = '1pKHV9YA1_Zb1HkCmfzHpKVctOrbF3qRqw8YiwFGmye4'
     API_KEY = 'AIzaSyCfHCY7oC3ymy4Sh8jBWZ5I2_332U_si2o'
 
+    #script to delete old requests
     url1 = 'https://script.google.com/macros/s/AKfycbzUsruUUeTqxxqD3sQe_x6woi0nsMoSYMCv3iFWIaYYeUlfxUYc0s62_3GZl1I2WrqRZA/exec'
     requests.get(url1)
 
