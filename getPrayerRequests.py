@@ -143,7 +143,7 @@ def prayerrequests():
     scrollbar.config( command = text.yview)
     
     root.mainloop()
-
+#s
 #Loop to refresh app and get new requests, plan is to make it a button within the app
 def container():
     prayerrequests()
