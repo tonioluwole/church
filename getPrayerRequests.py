@@ -76,21 +76,21 @@ def prayerrequests():
     SHEET_ID = '1pKHV9YA1_Zb1HkCmfzHpKVctOrbF3qRqw8YiwFGmye4'
     API_KEY = 'AIzaSyCfHCY7oC3ymy4Sh8jBWZ5I2_332U_si2o'
     
-    """
-    Scripts start 
+
+    #Scripts start 
     creds, _ = google.auth.default()
+    print ("HERE " ,creds, " HERE")
     service = build("script", "v1", credentials=creds)
 
-    scriptid='19g4v2Az23M2wZPdOSl5BQVBwZ2A8MO0wBiA-4u83hFjTbwRmdZrgImA-'
+    scriptid='AKfycbyuepUhk9aGUn_D7y-3h6VHoGcLC4Eth5Pzl_dLeEnliqeS6C8vxk9w3dlC8MgRwU41'
      # Create an execution request object.
     scriptrequest = {"function": "deleteOldEntries"}
 
     #Run script request
     service.scripts().run(scriptId=scriptid, body=scriptrequest).execute()
-    """
 
     # The range you want to access (e.g., 'Form responses 1!A1:Z')
-    RANGE = 'Form responses!A2:C'
+    RANGE = 'Prayers!A2:C'
 
     # Construct the API URL
     url = f'https://sheets.googleapis.com/v4/spreadsheets/{SHEET_ID}/values/{RANGE}?key={API_KEY}'
