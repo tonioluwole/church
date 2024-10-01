@@ -75,19 +75,9 @@ def prayerrequests():
     #Google Sheets ID and API key
     SHEET_ID = '1pKHV9YA1_Zb1HkCmfzHpKVctOrbF3qRqw8YiwFGmye4'
     API_KEY = 'AIzaSyCfHCY7oC3ymy4Sh8jBWZ5I2_332U_si2o'
-    
 
-    #Scripts start 
-    creds, _ = google.auth.default()
-    print ("HERE " ,creds, " HERE")
-    service = build("script", "v1", credentials=creds)
-
-    scriptid='AKfycbyuepUhk9aGUn_D7y-3h6VHoGcLC4Eth5Pzl_dLeEnliqeS6C8vxk9w3dlC8MgRwU41'
-     # Create an execution request object.
-    scriptrequest = {"function": "deleteOldEntries"}
-
-    #Run script request
-    service.scripts().run(scriptId=scriptid, body=scriptrequest).execute()
+    url1 = 'https://script.google.com/macros/s/AKfycbzUsruUUeTqxxqD3sQe_x6woi0nsMoSYMCv3iFWIaYYeUlfxUYc0s62_3GZl1I2WrqRZA/exec'
+    requests.get(url1)
 
     # The range you want to access (e.g., 'Form responses 1!A1:Z')
     RANGE = 'Prayers!A2:C'
@@ -102,6 +92,7 @@ def prayerrequests():
     # Check if the request was successful
     if response.status_code == 200:
         data = response.json()
+        print (data)
         # Get the rows from the response
         rows = data.get('values', [])
         
@@ -109,7 +100,8 @@ def prayerrequests():
         with open(filepath, 'w+') as file:
             
             for row in rows:
-                file.write('-------\nSUBMISSIONS ON: '+'\n'.join(row)+'\n')
+                tary = ''.join(row)+'\n'
+                file.write("\n"+tary[10:])
         
         print("Responses saved to "+filepath)
     else:
