@@ -19,7 +19,7 @@ from google.oauth2.service_account import Credentials
 #Auth codes and constants
 clientid='5ef5d12e37f08560522e850519259a5c03430635b3ac60b2477d0476a0cb52cc'
 secret="a4eafc69b2b5517f3016adb2a899eda397b7cdb2997b8c6db2a18b6bfb22840c"
-navy = "#353e45"
+navy = "#253f4b"
 grey = "#9AA0A6"
 yellow = "#FBBC04"
 white = '#ffffff'
@@ -74,22 +74,22 @@ def allfonts():
 
 def prayerrequests():
     #Google Sheets ID and API key
-    SHEET_ID = '1pKHV9YA1_Zb1HkCmfzHpKVctOrbF3qRqw8YiwFGmye4'
+    SHEET_ID = '15cZVwwdBApN-psE0-teWJ-E_aA3IPeSYDo0cUfaBLMQ'
     API_KEY = 'AIzaSyCfHCY7oC3ymy4Sh8jBWZ5I2_332U_si2o'
 
     #script to delete old requests
-    scripturl = 'https://script.google.com/macros/s/AKfycbzUsruUUeTqxxqD3sQe_x6woi0nsMoSYMCv3iFWIaYYeUlfxUYc0s62_3GZl1I2WrqRZA/exec'
+    scripturl = 'https://script.google.com/macros/s/AKfycbxeO6CwOoslPvLiaQ6fP41aKKYELgpp3n4gnqQfOHOv32Mu0jH6CUiBXZFbzMfXVDZX/exec'
     requests.get(scripturl)
 
     # The range you want to access (e.g., 'Form responses 1!A1:Z')
-    RANGE = 'Prayers!A2:C'
+    RANGE = 'Praises!A2:C'
 
     # Construct the API URL
     url = f'https://sheets.googleapis.com/v4/spreadsheets/{SHEET_ID}/values/{RANGE}?key={API_KEY}'
 
     # Make the GET request to the Google Sheets API
     response = requests.get(url)
-    filepath = "C:\\Users\\"+username+"\\Desktop\\"+today+" - Prayer requests.txt"
+    filepatha = "C:\\Users\\"+username+"\\Desktop\\"+today+" - Praise Reports.txt"
 
     # Check if the request was successful
     if response.status_code == 200:
@@ -99,7 +99,7 @@ def prayerrequests():
         rows = data.get('values', [])
         
         # Save the rows to a text file
-        with open(filepath, 'w+') as file:
+        with open(filepatha, 'w+') as file:
 
             file.write("Today's date (dd/mm): "+ today2+"\n")
             
@@ -108,11 +108,11 @@ def prayerrequests():
                 #slicing submission string to only show date and text
                 file.write("\n"+submission[19:])
         
-        print("Responses saved to "+filepath)
+        print("Responses saved to "+filepatha)
     else:
         print(f"Error: {response.status_code}, {response.text}")
 
-    requestsfile=open(filepath)
+    requestsfile=open(filepatha)
     gottenrequests = requestsfile.read()
 
     #os.startfile(filepath)
@@ -124,8 +124,8 @@ def prayerrequests():
     #Constants for GUI
     root = Tk()  # create a root widget
 
-    root.title("Prayer Requests")
-    root.configure(background=white)
+    root.title("Praise Reports")
+    root.configure(background=navy)
     root.minsize(200, 200)  # width, height
     root.maxsize(1200, 800)
     root.geometry("600x600+660+240")  # width x height + x + y
@@ -138,12 +138,12 @@ def prayerrequests():
     scrollbar.pack( side = RIGHT, fill=Y)
     ###################
 
-    Mainlabel=Label(font=Label_font,text="Prayer Requests",background=navy, foreground=white,height=2, borderwidth=2, relief="groove")
+    Mainlabel=Label(font=Label_font,text="Praise Reports",background=white, foreground=navy,height=2, borderwidth=2, relief="groove")
     Mainlabel.pack(fill='both', expand=False)
 
     text = Text(root, yscrollcommand = scrollbar.set)
     text.insert(INSERT,gottenrequests)
-    text.configure(font=Body_font,state=DISABLED, background=white, foreground=navy, borderwidth=0)
+    text.configure(font=Body_font,state=DISABLED, background=navy, foreground=white, borderwidth=0)
     text.pack(fill='both', expand=True,padx=(50,50))
     scrollbar.config( command = text.yview)
     
@@ -152,7 +152,7 @@ def prayerrequests():
 #Loop to refresh app and get new requests, plan is to make it a button within the app
 def container():
     prayerrequests()
-    yes = messagebox.askyesno('','Refresh prayer requests?')
+    yes = messagebox.askyesno('','Refresh praise reports?')
  
     while True:
         if yes == True:
