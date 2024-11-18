@@ -99,10 +99,13 @@ def prayerrequests():
         
         # Save the rows to a text file
         with open(filepath, 'w+') as file:
+
+            file.write("dd/mm\n")
             
             for row in rows:
-                tary = ''.join(row)+'\n'
-                file.write("\n"+tary[10:])
+                submission = ''.join(row)+'\n'
+                #slicing submission stringg to only show date and text
+                file.write("\n"+submission[0:5]+" "+submission[19:])
         
         print("Responses saved to "+filepath)
     else:
@@ -126,14 +129,15 @@ def prayerrequests():
     root.maxsize(1200, 800)
     root.geometry("600x600+660+240")  # width x height + x + y
 
-    Body_font = ("Malgun Gothic", 14,) 
-    Label_font = ("Malgun Gothic", 18, 'bold') 
+    Label_font = ("SF Pro bold", 18)
+    Body_font = ("SF Pro Regular", 14) 
+    
 
     scrollbar = Scrollbar(root)
     scrollbar.pack( side = RIGHT, fill=Y)
     ###################
 
-    Mainlabel=Label(font=Label_font,text="Prayer Requests",background=yellow, foreground=black,height=2, borderwidth=2, relief="groove")
+    Mainlabel=Label(font=Label_font,text="Prayer Requests",background=grey, foreground=black,height=2, borderwidth=2, relief="groove")
     Mainlabel.pack(fill='both', expand=False)
 
     text = Text(root, yscrollcommand = scrollbar.set)
@@ -156,8 +160,9 @@ def container():
                 quit()
 
 container()
-"""
+
 #for me
+"""
 def ask () :
     jack = input("\n1 for fonts \n2 for app\n3 to quit\n\n")
     if jack == "1":
